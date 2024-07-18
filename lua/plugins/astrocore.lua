@@ -1,10 +1,9 @@
-if true then return {} end -- WARN: REMOVE THIS LINE TO ACTIVATE THIS FILE
-
 -- AstroCore provides a central place to modify mappings, vim options, autocommands, and more!
 -- Configuration documentation can be found with `:h astrocore`
 -- NOTE: We highly recommend setting up the Lua Language Server (`:LspInstall lua_ls`)
 --       as this provides autocomplete and documentation while editing
-
+-- First, define the functions for insert mode actions
+-- Define a function for the normal mode toggle action
 ---@type LazySpec
 return {
   "AstroNvim/astrocore",
@@ -42,30 +41,21 @@ return {
     -- Mappings can be configured through AstroCore as well.
     -- NOTE: keycodes follow the casing in the vimdocs. For example, `<Leader>` must be capitalized
     mappings = {
-      -- first key is the mode
-      n = {
-        -- second key is the lefthand side of the map
+      n = { -- Normal mode mappings
+        ["<space>"] = { "V", desc = "Enter visual line mode" },
+        ["<space><space>"] = { "ggVG", desc = "Select all text" },
+        [";"] = { ":", desc = "; -> :" },
+        ["<A-]>"] = { function() require("astrocore.buffer").nav(vim.v.count1) end, desc = "Next buffer" },
+        ["<A-[>"] = { function() require("astrocore.buffer").nav(-vim.v.count1) end, desc = "Previous buffer" },
+        ["<A-d>"] = { function() require("astrocore.buffer").close() end, desc = "Remove current buffer" },
+        ,
+      },
 
-        -- navigate buffer tabs
-        ["]b"] = { function() require("astrocore.buffer").nav(vim.v.count1) end, desc = "Next buffer" },
-        ["[b"] = { function() require("astrocore.buffer").nav(-vim.v.count1) end, desc = "Previous buffer" },
-
-        -- mappings seen under group name "Buffer"
-        ["<Leader>bd"] = {
-          function()
-            require("astroui.status.heirline").buffer_picker(
-              function(bufnr) require("astrocore.buffer").close(bufnr) end
-            )
-          end,
-          desc = "Close buffer from tabline",
-        },
-
-        -- tables with just a `desc` key will be registered with which-key if it's installed
-        -- this is useful for naming menus
-        -- ["<Leader>b"] = { desc = "Buffers" },
-
-        -- setting a mapping to false will disable it
-        -- ["<C-S>"] = false,
+      v = { -- Normal mode mappings
+        [";"] = { ":", desc = "; -> :" },
+        ["<space><space>"] = { "ggVG", desc = "Select all text" },
+        ["<A-l>"] = { ">gv", desc = "Move left" },
+        ["<A-h>"] = { "<gv", desc = "Move Right" },
       },
     },
   },
