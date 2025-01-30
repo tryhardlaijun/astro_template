@@ -18,6 +18,9 @@ return {
       highlighturl = true, -- highlight URLs at start
       notifications = true, -- enable notifications at start
     },
+    tabstop = 4,
+    softtabstop = 4,
+    shiftwidth = 4,
     -- Diagnostics configuration (for vim.diagnostics.config({...})) when diagnostics are on
     diagnostics = {
       virtual_text = true,
@@ -45,17 +48,18 @@ return {
         ["<space>"] = { "V", desc = "Enter visual line mode" },
         ["<space><space>"] = { "ggVG", desc = "Select all text" },
         [";"] = { ":", desc = "; -> :" },
+        ["p"] = { "P", desc = "SWAP p -> P" },
+        ["P"] = { "p", desc = "SWAP P -> p" },
         ["<A-]>"] = { function() require("astrocore.buffer").nav(vim.v.count1) end, desc = "Next buffer" },
         ["<A-[>"] = { function() require("astrocore.buffer").nav(-vim.v.count1) end, desc = "Previous buffer" },
         ["<A-d>"] = { function() require("astrocore.buffer").close() end, desc = "Remove current buffer" },
-        ,
       },
 
       v = { -- Normal mode mappings
         [";"] = { ":", desc = "; -> :" },
         ["<space><space>"] = { "ggVG", desc = "Select all text" },
-        ["<A-l>"] = { ">gv", desc = "Move left" },
-        ["<A-h>"] = { "<gv", desc = "Move Right" },
+        ["L"] = { ">gv", desc = "Move left" },
+        ["H"] = { "<gv", desc = "Move Right" },
       },
     },
   },
